@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serenova Spa & Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Lavender & Rose brand palette */
+  --lav:        #9b72cf;
+  --lav-mid:    #b48ee0;
+  --lav-light:  #d4b8f0;
+  --lav-pale:   #f3edfb;
+  --rose:       #d4708a;
+  --rose-mid:   #e896aa;
+  --rose-light: #f5c6d4;
+  --rose-pale:  #fdf0f4;
+  /* Warm peach & gold backgrounds */
+  --peach:      #f7c59f;
+  --peach-mid:  #f9d4b3;
+  --peach-pale: #fef6ee;
+  --gold:       #c9973a;
+  --gold-light: #e8c97a;
+  --gold-pale:  #fdf8ec;
+  /* Neutrals */
+  --dark:       #3a2640;
+  --mid:        #7a5a72;
+  --muted:      #b096aa;
+  --cream:      #fffaf5;
+  --white:      #ffffff;
+  --border:     rgba(155,114,207,0.18);
+  --red:        #d94f6a;
+}
+
+/* ========== BODY & GLOBAL FLORAL BG ========== */
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  color:var(--dark);
+  overflow-x:hidden;
+  background:var(--cream);
+}
+
+/* Warm peach-to-rose gradient base on every page */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 5%,  rgba(247,197,159,0.38) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 90% 0%,  rgba(228,150,170,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 50% 100%,rgba(201,151,58, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 0%  80%,  rgba(155,114,207,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 70%, rgba(212,112,138,0.18) 0%, transparent 55%);
+}
+
+/* Subtle repeating floral tile */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:0.032;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='%239b72cf'%3E%3Ccircle cx='80' cy='80' r='5'/%3E%3Cellipse cx='80' cy='58' rx='8' ry='16' opacity='.8'/%3E%3Cellipse cx='80' cy='102' rx='8' ry='16' opacity='.8'/%3E%3Cellipse cx='58' cy='80' rx='16' ry='8' opacity='.8'/%3E%3Cellipse cx='102' cy='80' rx='16' ry='8' opacity='.8'/%3E%3Cellipse cx='63' cy='63' rx='8' ry='15' transform='rotate(45 63 63)' opacity='.5'/%3E%3Cellipse cx='97' cy='97' rx='8' ry='15' transform='rotate(45 97 97)' opacity='.5'/%3E%3Cellipse cx='97' cy='63' rx='8' ry='15' transform='rotate(-45 97 63)' opacity='.5'/%3E%3Cellipse cx='63' cy='97' rx='8' ry='15' transform='rotate(-45 63 97)' opacity='.5'/%3E%3C/g%3E%3Cg fill='%23d4708a'%3E%3Ccircle cx='16' cy='16' r='3'/%3E%3Cellipse cx='16' cy='5'  rx='5' ry='10' opacity='.7'/%3E%3Cellipse cx='16' cy='27' rx='5' ry='10' opacity='.7'/%3E%3Cellipse cx='5'  cy='16' rx='10' ry='5' opacity='.7'/%3E%3Cellipse cx='27' cy='16' rx='10' ry='5' opacity='.7'/%3E%3Ccircle cx='144' cy='144' r='3'/%3E%3Cellipse cx='144' cy='133' rx='5' ry='10' opacity='.7'/%3E%3Cellipse cx='144' cy='155' rx='5' ry='10' opacity='.7'/%3E%3Cellipse cx='133' cy='144' rx='10' ry='5' opacity='.7'/%3E%3Cellipse cx='155' cy='144' rx='10' ry='5' opacity='.7'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:160px 160px;
+}
+
+.page{position:relative;z-index:1;display:none;min-height:100vh}
+.page.active{display:block}
+#page-login.active{display:flex}
+
+/* ========== NAV ========== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:rgba(255,250,245,0.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(201,151,58,0.18);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:70px;
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;letter-spacing:0.08em;color:var(--dark);cursor:pointer;display:flex;align-items:center;gap:0.5rem}
+.logo-icon{font-size:1.3rem}
+.logo span{color:var(--rose);font-style:italic}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{text-decoration:none;font-size:0.79rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:color 0.2s;padding-bottom:2px;border-bottom:2px solid transparent}
+.nav-links a:hover,.nav-links a.active{color:var(--lav);border-bottom-color:var(--lav)}
+.nav-right{display:flex;gap:0.7rem;align-items:center}
+.btn-nav-ghost{background:transparent;border:1px solid rgba(155,114,207,0.35);color:var(--mid);cursor:pointer;padding:0.48rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:30px;transition:all 0.2s}
+.btn-nav-ghost:hover{border-color:var(--lav);color:var(--lav);background:var(--lav-pale)}
+.btn-nav{background:linear-gradient(135deg,var(--lav),var(--rose));color:var(--white);border:none;cursor:pointer;padding:0.52rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;border-radius:30px;transition:all 0.2s;box-shadow:0 4px 14px rgba(155,114,207,0.3)}
+.btn-nav:hover{box-shadow:0 6px 20px rgba(155,114,207,0.4);transform:translateY(-1px)}
+.user-badge{background:linear-gradient(135deg,var(--lav-pale),var(--rose-pale));color:var(--lav);border:1px solid var(--lav-light);padding:0.38rem 1rem;border-radius:30px;font-size:0.78rem;display:flex;align-items:center;gap:0.4rem}
+
+/* ========== BUTTONS ========== */
+.btn-primary{background:linear-gradient(135deg,var(--lav) 0%,var(--rose) 100%);color:var(--white);border:none;cursor:pointer;padding:0.88rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;letter-spacing:0.06em;border-radius:30px;transition:all 0.25s;text-transform:uppercase;box-shadow:0 6px 20px rgba(155,114,207,0.28)}
+.btn-primary:hover{box-shadow:0 10px 28px rgba(155,114,207,0.4);transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--white);border:none;cursor:pointer;padding:0.88rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;letter-spacing:0.06em;border-radius:30px;transition:all 0.25s;text-transform:uppercase;box-shadow:0 6px 20px rgba(201,151,58,0.28)}
+.btn-gold:hover{box-shadow:0 10px 28px rgba(201,151,58,0.4);transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,0.6);color:var(--dark);border:1px solid rgba(201,151,58,0.35);cursor:pointer;padding:0.88rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;letter-spacing:0.06em;border-radius:30px;transition:all 0.25s;text-transform:uppercase;backdrop-filter:blur(4px)}
+.btn-ghost:hover{border-color:var(--lav);color:var(--lav);background:var(--lav-pale)}
+.btn-sm{background:linear-gradient(135deg,var(--lav),var(--rose-mid));color:var(--white);border:none;cursor:pointer;padding:0.48rem 1.15rem;font-size:0.78rem;border-radius:20px;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 3px 10px rgba(155,114,207,0.22)}
+.btn-sm:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(155,114,207,0.32)}
+.btn-sm-ghost{background:transparent;color:var(--mid);border:1px solid rgba(201,151,58,0.3);cursor:pointer;padding:0.48rem 1.15rem;font-size:0.78rem;border-radius:20px;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.btn-sm-ghost:hover{border-color:var(--lav);color:var(--lav);background:var(--lav-pale)}
+.btn-full{width:100%;padding:0.95rem;font-size:0.9rem;margin-top:0.5rem}
+
+/* ========== SECTION COMMON ========== */
+section{padding:6rem 3rem}
+.container{max-width:1200px;margin:0 auto}
+.section-tag{font-size:0.74rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rose);margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem}
+.section-tag::before{content:'';width:22px;height:1px;background:var(--rose)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;color:var(--dark);line-height:1.2;margin-bottom:1rem}
+.section-sub{font-size:0.95rem;line-height:1.75;color:var(--mid);max-width:500px}
+
+/* ========== GLASS CARD ========== */
+.glass{
+  background:rgba(255,255,255,0.62);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.75);
+  box-shadow:0 8px 32px rgba(155,114,207,0.1);
+}
+
+/* ========== LOGIN PAGE ========== */
+#page-login{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 70% at 20% 10%, rgba(247,197,159,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 85% 5%,  rgba(232,150,170,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 60% at 50% 95%, rgba(201,151,58, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 50% at 5%  90%,  rgba(155,114,207,0.3) 0%, transparent 60%),
+    linear-gradient(160deg, #fff6ee 0%, #fdf0f4 50%, #f9f3ff 100%);
+  align-items:center;justify-content:center;padding:2rem;
+  position:relative;overflow:hidden;
+}
+/* Big blurred rose petal decorations */
+#page-login::before{content:'🌸';position:absolute;top:-40px;left:-30px;font-size:14rem;opacity:0.07;transform:rotate(-15deg);pointer-events:none}
+#page-login::after{content:'🌺';position:absolute;bottom:-40px;right:-20px;font-size:12rem;opacity:0.07;transform:rotate(20deg);pointer-events:none}
+.login-wrapper{
+  display:grid;grid-template-columns:1fr 1.05fr;max-width:920px;width:100%;
+  border-radius:28px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(60,30,60,0.18);
+  position:relative;z-index:1;
+}
+.login-left{
+  background:linear-gradient(160deg,#4a1060 0%,#7b3f9e 45%,#c4607e 100%);
+  padding:3.5rem;display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.login-left::before{content:'🌷';position:absolute;top:-20px;right:10px;font-size:10rem;opacity:0.08;transform:rotate(15deg)}
+.login-left::after{content:'🌹';position:absolute;bottom:10px;left:-10px;font-size:8rem;opacity:0.08;transform:rotate(-10deg)}
+.login-brand{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--white);letter-spacing:0.05em}
+.login-brand span{color:#f5c6d4;font-style:italic}
+.login-tagline{font-size:0.8rem;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.3rem;margin-bottom:3rem}
+.login-features{list-style:none;display:flex;flex-direction:column;gap:1.2rem}
+.login-features li{display:flex;align-items:center;gap:0.8rem;font-size:0.87rem;color:rgba(255,255,255,0.72)}
+.feat-dot{width:26px;height:26px;border-radius:50%;background:rgba(245,198,212,0.2);border:1px solid rgba(245,198,212,0.5);display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:#f5c6d4;flex-shrink:0}
+.login-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:rgba(255,255,255,0.38);line-height:1.65;margin-top:2.5rem;border-top:1px solid rgba(255,255,255,0.12);padding-top:1.5rem}
+.login-right{
+  background:linear-gradient(160deg,#fffaf5 0%,#fdf6ff 100%);
+  padding:3.5rem;
+}
+.login-tabs{display:flex;gap:0;margin-bottom:2.5rem;border-bottom:1px solid rgba(201,151,58,0.2)}
+.login-tab{background:none;border:none;cursor:pointer;padding:0.75rem 1.5rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s}
+.login-tab.active{color:var(--lav);border-bottom-color:var(--lav)}
+.form-group{display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.1rem}
+label{font-size:0.74rem;letter-spacing:0.07em;text-transform:uppercase;color:var(--mid)}
+input,select,textarea{
+  font-family:'DM Sans',sans-serif;font-size:0.9rem;
+  border:1px solid rgba(201,151,58,0.22);border-radius:12px;
+  padding:0.75rem 1rem;color:var(--dark);
+  background:rgba(255,253,248,0.85);
+  transition:all 0.2s;outline:none;-webkit-appearance:none;width:100%;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--lav);background:var(--white);box-shadow:0 0 0 3px rgba(155,114,207,0.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.login-alt{text-align:center;margin-top:1.2rem;font-size:0.82rem;color:var(--muted)}
+.login-alt a{color:var(--lav);cursor:pointer;text-decoration:none}
+.field-error{font-size:0.74rem;color:var(--red);margin-top:0.25rem}
+.demo-hint{margin-top:1rem;padding:0.9rem 1rem;background:linear-gradient(135deg,var(--gold-pale),var(--peach-pale));border-radius:12px;font-size:0.8rem;color:var(--mid);border:1px solid rgba(201,151,58,0.2)}
+
+/* ========== HERO ========== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding-top:70px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 75% 65% at 5%  0%,   rgba(247,197,159,0.6)  0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 95% 5%,   rgba(232,150,170,0.4)  0%, transparent 55%),
+    radial-gradient(ellipse 65% 55% at 50% 100%,  rgba(201,151,58, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 45% at 0%  90%,   rgba(155,114,207,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 100% 80%,  rgba(212,112,138,0.2)  0%, transparent 55%),
+    linear-gradient(160deg, #fff8f0 0%, #fdf2f8 50%, #f8f3ff 100%);
+}
+.hero-deco{position:absolute;pointer-events:none;z-index:0}
+.hero-deco-1{top:8%;right:6%;font-size:5rem;opacity:0.1;transform:rotate(20deg);animation:floatPetal 6s ease-in-out infinite}
+.hero-deco-2{bottom:15%;left:4%;font-size:4rem;opacity:0.09;transform:rotate(-25deg);animation:floatPetal 8s ease-in-out infinite reverse}
+.hero-deco-3{top:45%;left:46%;font-size:2.5rem;opacity:0.06;animation:floatPetal 7s ease-in-out infinite 1.5s}
+.hero-deco-4{top:20%;left:22%;font-size:2rem;opacity:0.06;transform:rotate(30deg);animation:floatPetal 9s ease-in-out infinite 0.5s}
+.hero-inner{max-width:1220px;margin:0 auto;padding:0 3rem;display:grid;grid-template-columns:1fr 1fr;gap:4.5rem;align-items:center;position:relative;z-index:1}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:linear-gradient(135deg,rgba(247,197,159,0.5),rgba(232,150,170,0.4));
+  color:var(--dark);font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;
+  padding:0.42rem 1.1rem;border-radius:30px;margin-bottom:1.6rem;
+  border:1px solid rgba(201,151,58,0.3);backdrop-filter:blur(6px);
+}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.9rem,5vw,4.4rem);font-weight:300;line-height:1.13;color:var(--dark);margin-bottom:1.5rem}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--lav),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;line-height:1.78;color:var(--mid);max-width:430px;margin-bottom:2.6rem}
+.hero-ctas{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.hero-visual{display:flex;flex-direction:column;gap:1rem;position:relative;z-index:1}
+.hero-card-main{
+  border-radius:22px;padding:2.1rem;
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.85);
+  box-shadow:0 20px 60px rgba(155,114,207,0.13),0 4px 16px rgba(201,151,58,0.1);
+}
+.rating-row{display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem}
+.stars{background:linear-gradient(135deg,var(--gold),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;font-size:1.05rem}
+.rating-text{font-size:0.79rem;color:var(--muted)}
+.hero-cards-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.mini-card{
+  border-radius:16px;padding:1.25rem;
+  background:rgba(255,255,255,0.65);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.8);
+  box-shadow:0 6px 20px rgba(155,114,207,0.09);
+}
+.mini-icon{font-size:1.5rem;margin-bottom:0.55rem}
+.mini-label{font-size:0.71rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.09em}
+.mini-value{font-family:'Cormorant Garamond',serif;font-size:1.28rem;font-weight:400;color:var(--dark);margin-top:0.1rem}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:var(--rose-mid);display:inline-block;margin-right:5px}
+
+/* ========== SERVICES PAGE ========== */
+.services-hero{
+  padding:8.5rem 3rem 3.5rem;
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 0%,   rgba(247,197,159,0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 55% at 90% 10%,  rgba(232,150,170,0.4)  0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 50% 100%,  rgba(201,151,58, 0.22) 0%, transparent 60%),
+    linear-gradient(160deg,#fff8f0,#fdf2f8);
+  position:relative;overflow:hidden;
+}
+.services-hero::before{content:'🌸';position:absolute;right:4%;top:15%;font-size:10rem;opacity:0.06;transform:rotate(15deg)}
+.services-hero::after{content:'🌷';position:absolute;left:2%;bottom:8%;font-size:7rem;opacity:0.06;transform:rotate(-10deg)}
+.filter-bar{display:flex;gap:0.65rem;flex-wrap:wrap;margin-top:2rem}
+.filter-btn{
+  background:rgba(255,255,255,0.6);border:1px solid rgba(201,151,58,0.28);
+  color:var(--mid);padding:0.48rem 1.25rem;border-radius:30px;font-size:0.79rem;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;backdrop-filter:blur(4px);
+}
+.filter-btn.active,.filter-btn:hover{background:linear-gradient(135deg,var(--lav),var(--rose));color:var(--white);border-color:transparent;box-shadow:0 4px 14px rgba(155,114,207,0.25)}
+.services-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;padding:3rem;max-width:1220px;margin:0 auto}
+.service-card{
+  border-radius:20px;overflow:hidden;transition:all 0.32s;cursor:pointer;
+  background:rgba(255,255,255,0.68);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.82);
+  box-shadow:0 8px 24px rgba(155,114,207,0.08);
+}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 22px 54px rgba(155,114,207,0.17);border-color:rgba(255,255,255,0.95)}
+.service-thumb{height:178px;display:flex;align-items:center;justify-content:center;font-size:3.2rem;position:relative}
+.s1{background:linear-gradient(135deg,#fde8d8,#f9c8dc)}
+.s2{background:linear-gradient(135deg,#f9e4f7,#edd8fa)}
+.s3{background:linear-gradient(135deg,#fdf2dc,#fae0b8)}
+.s4{background:linear-gradient(135deg,#fdf0f8,#fadcee)}
+.s5{background:linear-gradient(135deg,#eee4fa,#ddc8f4)}
+.s6{background:linear-gradient(135deg,#fef6e0,#fce8b8)}
+.s7{background:linear-gradient(135deg,#fce4d6,#f8c4b4)}
+.s8{background:linear-gradient(135deg,#f0e0f8,#dfc4f0)}
+.service-badge{
+  position:absolute;top:12px;right:12px;
+  background:rgba(255,255,255,0.88);color:var(--gold);
+  font-size:0.69rem;padding:0.24rem 0.75rem;border-radius:20px;
+  letter-spacing:0.06em;border:1px solid rgba(201,151,58,0.3);
+  backdrop-filter:blur(4px);
+}
+.service-body{padding:1.5rem}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:1.32rem;font-weight:400;color:var(--dark);margin-bottom:0.35rem}
+.service-desc{font-size:0.82rem;color:var(--muted);line-height:1.62;margin-bottom:1rem}
+.service-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1rem}
+.stag{font-size:0.69rem;padding:0.2rem 0.65rem;border-radius:12px;background:rgba(247,197,159,0.35);color:var(--mid);border:1px solid rgba(201,151,58,0.2)}
+.service-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,151,58,0.15);padding-top:1rem}
+.service-price{font-size:1.22rem;font-family:'Cormorant Garamond',serif;color:var(--dark)}
+.service-dur{font-size:0.74rem;color:var(--muted);margin-top:1px}
+
+/* ========== SLOT MODAL ========== */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(40,20,50,0.52);
+  display:none;align-items:flex-start;justify-content:center;
+  z-index:500;padding:5rem 1.5rem 2rem;overflow-y:auto;
+  backdrop-filter:blur(3px);
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:linear-gradient(160deg,#fffaf5 0%,#fdf6ff 100%);
+  border-radius:24px;width:100%;max-width:730px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(60,20,70,0.22);
+  border:1px solid rgba(255,255,255,0.9);
+}
+.modal-header{
+  padding:2rem 2.2rem 1.6rem;border-bottom:1px solid rgba(201,151,58,0.18);
+  display:flex;justify-content:space-between;align-items:flex-start;
+  background:linear-gradient(135deg,rgba(247,197,159,0.25),rgba(232,150,170,0.2));
+}
+.modal-service-name{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:300;color:var(--dark)}
+.modal-service-meta{font-size:0.81rem;color:var(--muted);margin-top:0.2rem}
+.modal-close-btn{background:rgba(255,255,255,0.6);border:1px solid rgba(201,151,58,0.2);cursor:pointer;font-size:1rem;color:var(--mid);padding:0.4rem 0.65rem;line-height:1;border-radius:8px;transition:all 0.2s}
+.modal-close-btn:hover{background:var(--rose-pale);color:var(--rose)}
+.modal-body{padding:2.2rem}
+
+/* Slot picker */
+.slot-section-title{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;display:flex;align-items:center;gap:0.4rem}
+.slot-section-title::before{content:'';width:16px;height:1px;background:var(--gold)}
+.date-tabs{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.date-tab{
+  background:rgba(255,255,255,0.65);border:1px solid rgba(201,151,58,0.2);
+  border-radius:14px;padding:0.65rem 1.1rem;cursor:pointer;transition:all 0.2s;
+  text-align:center;min-width:76px;backdrop-filter:blur(6px);
+}
+.date-tab:hover{border-color:var(--lav);background:var(--lav-pale)}
+.date-tab.active{background:linear-gradient(135deg,var(--lav),var(--rose));border-color:transparent;color:var(--white);box-shadow:0 4px 14px rgba(155,114,207,0.28)}
+.date-tab .dt-day{font-size:0.71rem;text-transform:uppercase;letter-spacing:0.07em;opacity:0.78}
+.date-tab .dt-num{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;line-height:1.1}
+.date-tab .dt-avail{font-size:0.67rem;opacity:0.68;margin-top:2px}
+.slots-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0.65rem;margin-bottom:2rem}
+.slot{
+  background:rgba(255,255,255,0.6);border:1px solid rgba(201,151,58,0.18);
+  border-radius:12px;padding:0.75rem 0.4rem;text-align:center;cursor:pointer;transition:all 0.2s;
+  backdrop-filter:blur(4px);
+}
+.slot:hover:not(.booked){border-color:var(--lav);background:var(--lav-pale);transform:translateY(-1px)}
+.slot.selected{background:linear-gradient(135deg,var(--lav),var(--rose));border-color:transparent;color:var(--white);box-shadow:0 4px 14px rgba(155,114,207,0.28)}
+.slot.booked{background:rgba(240,236,232,0.6);color:#ccc;cursor:not-allowed;border-color:#ece8e4}
+.slot .sl-time{font-size:0.87rem;font-weight:500}
+.slot .sl-price{font-size:0.71rem;opacity:0.78;margin-top:2px}
+.slot .sl-status{font-size:0.63rem;margin-top:2px}
+.therapist-select-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-bottom:2rem}
+.t-option{
+  border:1px solid rgba(201,151,58,0.2);border-radius:14px;padding:1rem 0.7rem;
+  text-align:center;cursor:pointer;transition:all 0.2s;
+  background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);
+}
+.t-option:hover{border-color:var(--lav);background:var(--lav-pale)}
+.t-option.selected{border-color:var(--lav);background:linear-gradient(135deg,var(--lav-pale),var(--rose-pale));box-shadow:0 4px 14px rgba(155,114,207,0.15)}
+.t-avatar{width:52px;height:52px;border-radius:50%;margin:0 auto 0.65rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.t-name{font-size:0.81rem;font-weight:500;color:var(--dark)}
+.t-role{font-size:0.71rem;color:var(--muted)}
+.t-rating{font-size:0.69rem;color:var(--rose-mid);margin-top:3px}
+
+/* Booking summary */
+.booking-summary{
+  background:linear-gradient(135deg,rgba(247,197,159,0.22),rgba(232,150,170,0.18));
+  border:1px solid rgba(201,151,58,0.22);border-radius:16px;padding:1.6rem;margin-bottom:1.5rem;
+}
+.summary-title{font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:0.4rem}
+.summary-rows{display:flex;flex-direction:column;gap:0.62rem}
+.summary-row{display:flex;justify-content:space-between;font-size:0.87rem}
+.summary-row .sr-label{color:var(--mid)}
+.summary-row .sr-value{color:var(--dark);font-weight:500}
+.summary-total{border-top:1px solid rgba(201,151,58,0.22);padding-top:0.8rem;margin-top:0.5rem}
+.summary-total .sr-label{font-weight:500;color:var(--dark)}
+.summary-total .sr-value{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:var(--dark)}
+
+/* Confirm modal */
+.confirm-modal{
+  position:fixed;inset:0;background:rgba(40,20,50,0.6);
+  display:none;align-items:center;justify-content:center;z-index:600;padding:1.5rem;
+  backdrop-filter:blur(4px);
+}
+.confirm-modal.open{display:flex}
+.confirm-box{
+  background:linear-gradient(160deg,#fffaf5,#fdf6ff);
+  border-radius:26px;padding:2.8rem;max-width:470px;width:100%;text-align:center;
+  border:1px solid rgba(255,255,255,0.9);
+  box-shadow:0 32px 80px rgba(60,20,70,0.2);
+}
+.confirm-icon{font-size:3.2rem;margin-bottom:1rem}
+.confirm-title{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:300;color:var(--dark);margin-bottom:0.5rem}
+.confirm-text{font-size:0.9rem;color:var(--mid);line-height:1.75;margin-bottom:2rem}
+.confirm-detail{
+  background:linear-gradient(135deg,rgba(247,197,159,0.25),rgba(232,150,170,0.2));
+  border-radius:14px;padding:1.3rem;margin-bottom:1.6rem;text-align:left;
+  border:1px solid rgba(201,151,58,0.2);
+}
+.confirm-detail-row{display:flex;justify-content:space-between;font-size:0.84rem;padding:0.3rem 0}
+.confirm-detail-row .cd-l{color:var(--mid)}
+.confirm-detail-row .cd-v{color:var(--dark);font-weight:500}
+.confirm-btns{display:flex;gap:0.75rem}
+.confirm-btns button{flex:1}
+
+/* Booking flow steps */
+.steps-flow{display:flex;align-items:center;margin-bottom:2rem}
+.step-item{display:flex;align-items:center;gap:0.5rem;font-size:0.79rem;color:var(--muted)}
+.step-item.done{color:var(--rose)}
+.step-item.current{color:var(--dark);font-weight:500}
+.step-circle{width:28px;height:28px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:0.73rem;flex-shrink:0;transition:all 0.25s}
+.step-item.done .step-circle{background:linear-gradient(135deg,var(--lav),var(--rose));border-color:transparent;color:white}
+.step-line{flex:1;height:1px;background:rgba(201,151,58,0.2);margin:0 0.5rem;min-width:20px}
+
+/* ========== HOW IT WORKS ========== */
+.how-it-works{
+  background:
+    radial-gradient(ellipse 70% 60% at 0% 50%,   rgba(247,197,159,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 55% at 100% 50%,  rgba(232,150,170,0.32) 0%, transparent 55%),
+    linear-gradient(160deg, #fef8f0, #fdf4f8);
+  position:relative;overflow:hidden;
+}
+.how-it-works::after{content:'🌺';position:absolute;right:2%;bottom:5%;font-size:8rem;opacity:0.055;transform:rotate(12deg);pointer-events:none}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem}
+.step-card{text-align:center;padding:2rem 1.5rem}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(247,197,159,0.5),rgba(232,150,170,0.4));
+  border:1px solid rgba(201,151,58,0.3);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;
+  font-family:'Cormorant Garamond',serif;font-size:1.55rem;color:var(--dark);
+  backdrop-filter:blur(4px);
+}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:400;color:var(--dark);margin-bottom:0.5rem}
+.step-desc{font-size:0.82rem;color:var(--muted);line-height:1.68}
+
+/* ========== THERAPISTS ========== */
+.therapist-section{
+  background:
+    radial-gradient(ellipse 60% 55% at 10% 0%,  rgba(155,114,207,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 90% 100%, rgba(212,112,138,0.12) 0%, transparent 55%),
+    linear-gradient(160deg,#fdfaff,#fffaf5);
+}
+.therapist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3.5rem}
+.therapist-card{
+  text-align:center;padding:1.8rem 1.25rem;
+  background:rgba(255,255,255,0.62);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.82);border-radius:20px;transition:all 0.25s;
+  box-shadow:0 6px 20px rgba(155,114,207,0.07);
+}
+.therapist-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(155,114,207,0.14)}
+.therapist-avatar{width:82px;height:82px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2.1rem;border:2px solid rgba(255,255,255,0.9);box-shadow:0 4px 16px rgba(155,114,207,0.18)}
+.t1{background:linear-gradient(135deg,#edd4f8,#d4a8f0)}
+.t2{background:linear-gradient(135deg,#f9c8dc,#f0a0c0)}
+.t3{background:linear-gradient(135deg,#fde8c0,#f8c878)}
+.t4{background:linear-gradient(135deg,#f8d4e8,#f0a8d0)}
+.therapist-name{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:400;color:var(--dark);margin-bottom:0.22rem}
+.therapist-role{font-size:0.77rem;color:var(--lav);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.5rem}
+.therapist-exp{font-size:0.81rem;color:var(--muted);margin-bottom:0.75rem}
+.therapist-tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.ttag{font-size:0.67rem;padding:0.2rem 0.55rem;border-radius:10px;background:rgba(247,197,159,0.35);color:var(--mid);border:1px solid rgba(201,151,58,0.2)}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials{
+  background:linear-gradient(160deg,#3a1050 0%,#6b2a7a 40%,#a03060 80%,#c06040 100%);
+  color:var(--white);position:relative;overflow:hidden;
+}
+.testimonials::before{content:'🌸';position:absolute;top:-30px;right:4%;font-size:14rem;opacity:0.04;transform:rotate(8deg);pointer-events:none}
+.testimonials::after{content:'🌺';position:absolute;bottom:-20px;left:2%;font-size:11rem;opacity:0.05;transform:rotate(-5deg);pointer-events:none}
+.testimonials .section-tag{color:var(--gold-light)}
+.testimonials .section-tag::before{background:var(--gold-light)}
+.testimonials .section-title{color:var(--white)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.testi-card{
+  background:rgba(255,255,255,0.08);border-radius:18px;padding:2rem;
+  border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(6px);
+  transition:all 0.2s;
+}
+.testi-card:hover{background:rgba(255,255,255,0.12);transform:translateY(-3px)}
+.testi-stars{background:linear-gradient(135deg,var(--gold-light),var(--peach));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1rem;letter-spacing:3px;margin-bottom:1rem}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.72;color:rgba(255,255,255,0.88);margin-bottom:1.5rem}
+.testi-author{font-size:0.81rem;color:rgba(255,255,255,0.5)}
+.testi-author strong{color:rgba(255,255,255,0.85);display:block;margin-bottom:0.12rem}
+
+/* ========== FOOTER ========== */
+footer{
+  background:linear-gradient(135deg,#2e1040,#5a1a50);
+  color:rgba(255,255,255,0.45);padding:2.5rem 3rem;
+  border-top:1px solid rgba(247,197,159,0.15);
+  display:flex;justify-content:space-between;align-items:center;font-size:0.81rem;
+}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem}
+.footer-logo span{background:linear-gradient(135deg,var(--gold-light),var(--rose-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+.footer-links{display:flex;gap:2rem;list-style:none}
+.footer-links a{color:rgba(255,255,255,0.42);text-decoration:none;font-size:0.79rem;cursor:pointer;transition:color 0.2s}
+.footer-links a:hover{color:var(--gold-light)}
+
+/* ========== MY BOOKINGS ========== */
+#page-bookings{padding-top:70px}
+.bookings-hero{
+  padding:4.5rem 3rem 3rem;
+  background:
+    radial-gradient(ellipse 70% 65% at 10% 0%,rgba(247,197,159,0.5) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 50% at 90% 0%,rgba(232,150,170,0.4) 0%,transparent 55%),
+    linear-gradient(160deg,#fff8f0,#fdf2f8);
+  position:relative;overflow:hidden;
+}
+.bookings-hero::before{content:'🌸';position:absolute;right:4%;top:10%;font-size:8rem;opacity:0.06;transform:rotate(12deg)}
+.bookings-list{max-width:880px;margin:0 auto;padding:3rem}
+.booking-card{
+  background:rgba(255,255,255,0.68);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.85);border-radius:18px;padding:1.8rem;
+  margin-bottom:1.2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+  box-shadow:0 6px 20px rgba(155,114,207,0.08);transition:all 0.22s;
+}
+.booking-card:hover{box-shadow:0 12px 32px rgba(155,114,207,0.14);transform:translateY(-2px)}
+.bc-left{display:flex;gap:1.25rem;align-items:center}
+.bc-icon{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+  background:linear-gradient(135deg,rgba(247,197,159,0.4),rgba(232,150,170,0.35));
+  border:1px solid rgba(201,151,58,0.2);
+}
+.bc-name{font-family:'Cormorant Garamond',serif;font-size:1.28rem;color:var(--dark);margin-bottom:0.2rem}
+.bc-meta{font-size:0.81rem;color:var(--muted)}
+.bc-status{font-size:0.74rem;padding:0.28rem 0.85rem;border-radius:20px;font-weight:500}
+.status-upcoming{background:linear-gradient(135deg,var(--lav-pale),var(--rose-pale));color:var(--lav);border:1px solid var(--lav-light)}
+.status-completed{background:var(--gold-pale);color:var(--gold);border:1px solid rgba(201,151,58,0.3)}
+.bc-price{font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--dark);text-align:right}
+.bc-price small{display:block;font-family:'DM Sans',sans-serif;font-size:0.74rem;color:var(--muted)}
+.empty-state{text-align:center;padding:4rem;color:var(--muted)}
+.empty-state .es-icon{font-size:3.5rem;margin-bottom:1rem}
+.empty-state p{font-size:0.95rem;margin-bottom:1.5rem;line-height:1.7}
+
+/* ========== TOAST ========== */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;
+  background:linear-gradient(135deg,#3a1050,#6b2a7a);
+  color:var(--white);padding:1rem 1.5rem;border-radius:14px;font-size:0.87rem;
+  z-index:900;transform:translateY(100px);opacity:0;transition:all 0.38s;
+  display:flex;align-items:center;gap:0.75rem;
+  border:1px solid rgba(247,197,159,0.25);
+  box-shadow:0 8px 28px rgba(60,20,70,0.28);
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-dot{width:8px;height:8px;border-radius:50%;background:var(--gold-light);flex-shrink:0}
+
+/* ========== ANIMATIONS ========== */
+@keyframes floatPetal{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(8deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.5s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="logo" onclick="showPage('home')"><span class="logo-icon">🌺</span>Serenova <span>Spa</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('home');setTimeout(()=>document.getElementById('therapists-section').scrollIntoView({behavior:'smooth'}),200)" id="nav-therapists">Therapists</a></li>
+    <li><a onclick="showPage('bookings')" id="nav-bookings">My Bookings</a></li>
+  </ul>
+  <div class="nav-right" id="nav-auth">
+    <button class="btn-nav" onclick="showLogin('signup')">Create Account</button>
+  </div>
+  <div class="nav-right" id="nav-user" style="display:none">
+    <div class="user-badge">🌸 <span id="nav-username">Guest</span></div>
+    <button class="btn-nav-ghost" onclick="logout()">Log Out</button>
+  </div>
+</nav>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div class="page" id="page-login">
+  <div class="login-wrapper">
+    <div class="login-left">
+      <div>
+        <div class="login-brand">🌺 Serenova <span>Spa</span></div>
+        <div class="login-tagline">Smart Wellness Booking · Hyderabad</div>
+        <ul class="login-features">
+          <li><div class="feat-dot">✦</div>Browse real-time available slots</li>
+          <li><div class="feat-dot">✦</div>Choose your preferred therapist</li>
+          <li><div class="feat-dot">✦</div>Transparent pricing, no surprises</li>
+          <li><div class="feat-dot">✦</div>Instant booking confirmation</li>
+          <li><div class="feat-dot">✦</div>Track all your appointments</li>
+        </ul>
+      </div>
+      <div class="login-quote">"True luxury is not having to think — just arrive and be restored."</div>
+    </div>
+    <div class="login-right">
+      <div style="margin-bottom:1.8rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--dark);margin-bottom:0.3rem">Create Your Account</div>
+        <div style="font-size:0.82rem;color:var(--muted)">Join Serenova Spa — free, takes 30 seconds 🌸</div>
+      </div>
+      <!-- Login Form (hidden, accessible via "Sign in here" link) -->
+      <div id="form-login" style="display:none">
+        <div class="form-group"><label>Email Address</label><input type="email" id="login-email" placeholder="you@email.com"><div class="field-error" id="login-email-err"></div></div>
+        <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"><div class="field-error" id="login-pass-err"></div></div>
+        <div class="field-error" id="login-general-err" style="margin-bottom:0.75rem"></div>
+        <button class="btn-primary btn-full" onclick="doLogin()">Sign In →</button>
+        <div class="login-alt" style="margin-top:1rem">New here? <a onclick="switchTab('signup')">Create a free account</a></div>
+      </div>
+      <!-- Signup Form (shown by default) -->
+      <div id="form-signup">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" id="reg-fname" placeholder="Priya"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="reg-lname" placeholder="Sharma"></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="reg-email" placeholder="you@email.com"><div class="field-error" id="reg-email-err"></div></div>
+        <div class="form-group"><label>Mobile Number</label><input type="tel" id="reg-phone" placeholder="+91 98765 43210"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="Min. 6 characters"><div class="field-error" id="reg-pass-err"></div></div>
+        <div class="field-error" id="reg-general-err" style="margin-bottom:0.75rem"></div>
+        <button class="btn-primary btn-full" onclick="doSignup()">Create Account &amp; Continue →</button>
+        <div class="login-alt" style="margin-top:1rem">Already have an account? <a onclick="switchTab('login')">Sign in here</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-deco hero-deco-1">🌸</div>
+    <div class="hero-deco hero-deco-2">🌷</div>
+    <div class="hero-deco hero-deco-3">🌺</div>
+    <div class="hero-deco hero-deco-4">🌼</div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">✦ Smart Wellness Booking &nbsp;·&nbsp; Hyderabad</div>
+        <h1>Restore your<br><em>body & soul</em><br>effortlessly</h1>
+        <p>Premium spa experiences tailored to you. Browse real-time slots, pick your therapist, confirm in seconds — then simply arrive and unwind.</p>
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="showPage('services')">Browse Services</button>
+          <button class="btn-ghost" onclick="showLoginRequired()">Book Now</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-main">
+          <div class="rating-row">
+            <span class="stars">★★★★★</span>
+            <span class="rating-text">4.9 · 2,400+ reviews</span>
+          </div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--dark);margin-bottom:0.2rem">Deep Tissue Massage</div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem">90 minutes · Full Body Therapy</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.3rem">
+            <span class="stag">Relaxation</span><span class="stag">Muscle Relief</span><span class="stag">Stress Relief</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,151,58,0.18);padding-top:1.25rem">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.42rem;color:var(--dark)">₹2,800 <span style="font-size:0.74rem;font-family:'DM Sans',sans-serif;color:var(--muted)">per session</span></div>
+            <button class="btn-sm" onclick="showLoginRequired()">Book Now</button>
+          </div>
+        </div>
+        <div class="hero-cards-row">
+          <div class="mini-card"><div class="mini-icon">🌸</div><div class="mini-label">Next Available</div><div class="mini-value"><span class="avail-dot"></span>Today 3 PM</div></div>
+          <div class="mini-card"><div class="mini-icon">🌷</div><div class="mini-label">Expert Therapists</div><div class="mini-value">18 Specialists</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works">
+    <div class="container">
+      <p class="section-tag">The Process</p>
+      <h2 class="section-title">Booking made beautifully simple</h2>
+      <div class="steps-grid">
+        <div class="step-card"><div class="step-num">1</div><div class="step-title">Choose Your Treatment</div><div class="step-desc">Browse 8+ curated wellness services with full details, duration & pricing.</div></div>
+        <div class="step-card"><div class="step-num">2</div><div class="step-title">View Live Slots</div><div class="step-desc">See real-time availability for the next 7 days — available, booked, and pricing.</div></div>
+        <div class="step-card"><div class="step-num">3</div><div class="step-title">Pick Therapist & Time</div><div class="step-desc">Choose your preferred specialist and the slot that fits your day perfectly.</div></div>
+        <div class="step-card"><div class="step-num">4</div><div class="step-title">Confirm & Arrive</div><div class="step-desc">Review full booking summary, confirm, and receive instant confirmation.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Therapists -->
+  <section class="therapist-section" style="padding:6rem 3rem" id="therapists-section">
+    <div class="container">
+      <p class="section-tag">Our Team</p>
+      <h2 class="section-title">Master therapists,<br>exceptional care</h2>
+      <p class="section-sub">Every specialist is certified, experienced, and passionate about your wellbeing.</p>
+      <div class="therapist-grid">
+        <div class="therapist-card"><div class="therapist-avatar t1">🌸</div><div class="therapist-name">Priya Nair</div><div class="therapist-role">Ayurvedic Specialist</div><div class="therapist-exp">★ 4.9 · 8 years</div><div class="therapist-tags"><span class="ttag">Ayurveda</span><span class="ttag">Herbal</span><span class="ttag">Yoga</span></div></div>
+        <div class="therapist-card"><div class="therapist-avatar t2">🌷</div><div class="therapist-name">Rohan Mehta</div><div class="therapist-role">Deep Tissue Expert</div><div class="therapist-exp">★ 4.8 · 6 years</div><div class="therapist-tags"><span class="ttag">Deep Tissue</span><span class="ttag">Sports</span></div></div>
+        <div class="therapist-card"><div class="therapist-avatar t3">✨</div><div class="therapist-name">Ananya Sharma</div><div class="therapist-role">Skin & Facial Care</div><div class="therapist-exp">★ 5.0 · 10 years</div><div class="therapist-tags"><span class="ttag">Facials</span><span class="ttag">Gold</span><span class="ttag">Glow</span></div></div>
+        <div class="therapist-card"><div class="therapist-avatar t4">🧘</div><div class="therapist-name">Vikram Das</div><div class="therapist-role">Holistic Wellness</div><div class="therapist-exp">★ 4.9 · 7 years</div><div class="therapist-tags"><span class="ttag">Holistic</span><span class="ttag">Stone</span><span class="ttag">Aroma</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials" style="padding:6rem 3rem">
+    <div class="container">
+      <p class="section-tag">What Guests Say</p>
+      <h2 class="section-title">Stories of transformation</h2>
+      <div class="testi-grid">
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"The Ayurvedic massage with Priya was absolutely transformative. Booking was effortless and I floated out completely renewed."</div><div class="testi-author"><strong>Meera Krishnan</strong>Hyderabad · Ayurvedic Massage</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"The live slot picker is brilliant — I could see exactly what was available and at what price before committing. Truly transparent."</div><div class="testi-author"><strong>Arjun Patel</strong>Bangalore · Hot Stone Therapy</div></div>
+        <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Ananya's gold facial gave me the most radiant skin. The confirmation summary showed every detail — so professional!"</div><div class="testi-author"><strong>Divya Reddy</strong>Hyderabad · Gold Facial</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">🌺 Serenova <span>Spa</span></div>
+    <ul class="footer-links">
+      <li><a onclick="showPage('services')">Services</a></li>
+      <li><a onclick="showPage('home');setTimeout(()=>document.getElementById('therapists-section').scrollIntoView({behavior:'smooth'}),200)">Therapists</a></li>
+      <li><a onclick="showLoginRequired()">Gift Cards</a></li>
+      <li><a>Contact</a></li>
+    </ul>
+    <div>© 2026 Serenova Spa · Hyderabad 🌸</div>
+  </footer>
+</div>
+
+<!-- ===== SERVICES PAGE ===== -->
+<div class="page" id="page-services">
+  <div class="services-hero">
+    <div class="container">
+      <p class="section-tag">All Treatments</p>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--dark);line-height:1.2;margin-bottom:1rem">Curated experiences<br>for every need</h1>
+      <p style="font-size:0.95rem;color:var(--mid);max-width:480px">Select a treatment to view live available slots, therapists, and pricing before you book.</p>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterServices('all',this)">All Services</button>
+        <button class="filter-btn" onclick="filterServices('massage',this)">Massage</button>
+        <button class="filter-btn" onclick="filterServices('facial',this)">Facial & Skin</button>
+        <button class="filter-btn" onclick="filterServices('body',this)">Body Therapy</button>
+        <button class="filter-btn" onclick="filterServices('wellness',this)">Wellness</button>
+      </div>
+    </div>
+  </div>
+  <div class="services-grid-full" id="services-grid"></div>
+</div>
+
+<!-- ===== MY BOOKINGS PAGE ===== -->
+<div class="page" id="page-bookings">
+  <div class="bookings-hero">
+    <div class="container">
+      <p class="section-tag">My Account</p>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:300;color:var(--dark)">My Bookings</h1>
+      <p style="font-size:0.9rem;color:var(--mid);margin-top:0.5rem">Your upcoming and past sessions at Serenova Spa</p>
+    </div>
+  </div>
+  <div class="bookings-list" id="bookings-list"></div>
+</div>
+
+<!-- ===== SLOT PICKER MODAL ===== -->
+<div class="modal-overlay" id="slot-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-service-name" id="modal-title">Service Name</div>
+        <div class="modal-service-meta" id="modal-meta">Duration · Price</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeSlotModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="steps-flow">
+        <div class="step-item current" id="bstep-1"><div class="step-circle">1</div><span>Select Slot</span></div>
+        <div class="step-line"></div>
+        <div class="step-item" id="bstep-2"><div class="step-circle">2</div><span>Choose Therapist</span></div>
+        <div class="step-line"></div>
+        <div class="step-item" id="bstep-3"><div class="step-circle">3</div><span>Confirm Booking</span></div>
+      </div>
+      <!-- Step 1 -->
+      <div id="step-slot">
+        <p class="slot-section-title">Select Date</p>
+        <div class="date-tabs" id="date-tabs"></div>
+        <p class="slot-section-title">Available Time Slots</p>
+        <div class="slots-grid" id="slots-grid"></div>
+        <button class="btn-primary" onclick="goToStep(2)" id="btn-step2" style="opacity:0.4;cursor:not-allowed" disabled>Choose Therapist →</button>
+      </div>
+      <!-- Step 2 -->
+      <div id="step-therapist" style="display:none">
+        <p class="slot-section-title">Select Your Therapist</p>
+        <div class="therapist-select-row" id="therapist-options"></div>
+        <button class="btn-primary" onclick="goToStep(3)" id="btn-step3" style="opacity:0.4;cursor:not-allowed" disabled>Review Booking →</button>
+        <button class="btn-ghost" onclick="goToStep(1)" style="margin-left:0.75rem">← Back</button>
+      </div>
+      <!-- Step 3 -->
+      <div id="step-confirm" style="display:none">
+        <div class="booking-summary">
+          <div class="summary-title">✦ Booking Summary</div>
+          <div class="summary-rows" id="summary-rows"></div>
+        </div>
+        <div class="form-group">
+          <label>Special Requests (optional)</label>
+          <textarea id="special-notes" placeholder="Any health concerns, preferences, or notes for your therapist..." style="height:80px;resize:none"></textarea>
+        </div>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-primary" style="flex:1" onclick="finalConfirm()">✓ Confirm Booking</button>
+          <button class="btn-ghost" onclick="goToStep(2)">← Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FINAL CONFIRMATION MODAL ===== -->
+<div class="confirm-modal" id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-icon">🌺</div>
+    <div class="confirm-title">Booking Confirmed!</div>
+    <div class="confirm-detail" id="confirm-detail"></div>
+    <div class="confirm-text">A confirmation has been sent to your email. We look forward to welcoming you! 🌸</div>
+    <div class="confirm-btns">
+      <button class="btn-primary" onclick="closeConfirm();showPage('bookings')">View My Bookings</button>
+      <button class="btn-ghost" onclick="closeConfirm()">Back to Services</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg">Done!</span></div>
+
+<script>
+const SERVICES=[
+  {id:1,name:'Swedish Massage',emoji:'🌿',thumb:'s1',cat:'massage',duration:'60 min',price:1800,desc:'Gentle long strokes to relax muscles, improve circulation and melt away tension.',tags:['Relaxation','Circulation','Stress Relief'],badge:'Popular'},
+  {id:2,name:'Deep Tissue Massage',emoji:'💜',thumb:'s7',cat:'massage',duration:'90 min',price:2800,desc:'Firm pressure targeting deep muscle layers for chronic pain and tension relief.',tags:['Pain Relief','Muscle Deep','Recovery']},
+  {id:3,name:'Hot Stone Therapy',emoji:'🪨',thumb:'s2',cat:'body',duration:'90 min',price:3200,desc:'Warm volcanic stones on energy points to release deep tension and toxins.',tags:['Deep Warmth','Detox','Energy'],badge:'Signature'},
+  {id:4,name:'Aromatherapy Massage',emoji:'🌸',thumb:'s3',cat:'wellness',duration:'75 min',price:2200,desc:'Essential oil infused massage targeting stress, anxiety and emotional well-being.',tags:['Essential Oils','Anxiety','Mood']},
+  {id:5,name:'Gold Facial',emoji:'✨',thumb:'s4',cat:'facial',duration:'60 min',price:4500,desc:'24K gold-infused treatment for deep hydration, anti-aging and radiant glow.',tags:['Anti-Aging','Hydration','Glow'],badge:'New'},
+  {id:6,name:'Ayurvedic Massage',emoji:'🧘',thumb:'s5',cat:'wellness',duration:'90 min',price:2800,desc:'Traditional Indian herbal oil massage to balance doshas and restore harmony.',tags:['Herbal Oil','Dosha Balance','Holistic']},
+  {id:7,name:'Hydrotherapy',emoji:'🛁',thumb:'s6',cat:'body',duration:'120 min',price:3600,desc:'Water-based healing using mineral soaks and jet therapy for muscle recovery.',tags:['Mineral Soak','Recovery','Circulation']},
+  {id:8,name:'Classic Facial',emoji:'🌷',thumb:'s8',cat:'facial',duration:'45 min',price:1500,desc:'Deep cleanse, exfoliation and nourishing mask for fresh glowing skin.',tags:['Cleanse','Exfoliate','Glow']}
+];
+const THERAPISTS=[
+  {id:1,name:'Priya Nair',role:'Ayurvedic Specialist',emoji:'🌸',avatar:'t1',rating:'4.9',specialties:['Ayurvedic Massage','Aromatherapy Massage','Swedish Massage']},
+  {id:2,name:'Rohan Mehta',role:'Deep Tissue Expert',emoji:'🌷',avatar:'t2',rating:'4.8',specialties:['Deep Tissue Massage','Hot Stone Therapy','Swedish Massage']},
+  {id:3,name:'Ananya Sharma',role:'Skin & Facial Care',emoji:'✨',avatar:'t3',rating:'5.0',specialties:['Gold Facial','Classic Facial','Aromatherapy Massage']},
+  {id:4,name:'Vikram Das',role:'Holistic Wellness',emoji:'🧘',avatar:'t4',rating:'4.9',specialties:['Hot Stone Therapy','Hydrotherapy','Ayurvedic Massage','Deep Tissue Massage']}
+];
+function generateSlots(sid){
+  const times=['9:00 AM','10:30 AM','12:00 PM','1:30 PM','3:00 PM','4:30 PM','6:00 PM','7:30 PM'];
+  const days=[];const today=new Date();
+  for(let d=0;d<7;d++){
+    const dt=new Date(today);dt.setDate(today.getDate()+d);
+    const slots=times.map((t,ti)=>{
+      const seed=(sid*31+d*7+ti*3)%10;const booked=seed<3;
+      const peak=['6:00 PM','7:30 PM','4:30 PM'].includes(t);
+      const price=peak?Math.round(SERVICES.find(s=>s.id===sid).price*1.1):SERVICES.find(s=>s.id===sid).price;
+      return{time:t,booked,price,peak};
+    });
+    const avail=slots.filter(s=>!s.booked).length;
+    const dayName=dt.toLocaleDateString('en-IN',{weekday:'short'});
+    days.push({label:d===0?'Today':d===1?'Tomorrow':dayName,num:dt.getDate(),date:dt.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}),slots,avail});
+  }
+  return days;
+}
+let currentUser=null,userBookings=[],selectedService=null,slotData=[],selectedDay=0,selectedSlot=null,selectedTherapist=null;
+let users=[{email:'demo@serenova.com',pass:'demo123',fname:'Demo',lname:'User',phone:'+91 98765 00000'}];
+
+function showPage(pg){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  const n=document.getElementById('nav-'+pg);if(n)n.classList.add('active');
+  window.scrollTo(0,0);
+  if(pg==='services')renderServices('all');
+  if(pg==='bookings')renderBookings();
+}
+function showLogin(tab){showPage('login');switchTab(tab);}
+function showLoginRequired(){if(!currentUser){showToast('Please log in to book a session');showLogin('login');return;}showPage('services');}
+function switchTab(tab){
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
+  // Update heading
+  const heading=document.querySelector('#page-login .login-right > div:first-child > div:first-child');
+  if(heading) heading.textContent=tab==='login'?'Welcome Back':'Create Your Account';
+  clearErrors();
+}
+function clearErrors(){['login-email-err','login-pass-err','login-general-err','reg-email-err','reg-pass-err','reg-general-err'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='';})}
+function doLogin(){
+  clearErrors();
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-pass').value;
+  if(!email){document.getElementById('login-email-err').textContent='Email is required';return;}
+  if(!pass){document.getElementById('login-pass-err').textContent='Password is required';return;}
+  const user=users.find(u=>u.email===email&&u.pass===pass);
+  if(!user){document.getElementById('login-general-err').textContent='Invalid email or password';return;}
+  loginSuccess(user);
+}
+function doSignup(){
+  clearErrors();
+  const fname=document.getElementById('reg-fname').value.trim(),lname=document.getElementById('reg-lname').value.trim();
+  const email=document.getElementById('reg-email').value.trim(),phone=document.getElementById('reg-phone').value.trim();
+  const pass=document.getElementById('reg-pass').value;
+  if(!fname||!lname||!email||!phone||!pass){document.getElementById('reg-general-err').textContent='Please fill in all fields';return;}
+  if(pass.length<6){document.getElementById('reg-pass-err').textContent='Min. 6 characters';return;}
+  if(users.find(u=>u.email===email)){document.getElementById('reg-email-err').textContent='Account already exists';return;}
+  users.push({email,pass,fname,lname,phone});loginSuccess(users[users.length-1]);
+}
+function loginSuccess(user){
+  currentUser=user;
+  document.getElementById('nav-auth').style.display='none';
+  document.getElementById('nav-user').style.display='flex';
+  document.getElementById('nav-username').textContent=user.fname;
+  showToast('Welcome, '+user.fname+'! 🌸');showPage('home');
+}
+function logout(){currentUser=null;document.getElementById('nav-auth').style.display='flex';document.getElementById('nav-user').style.display='none';showToast('Logged out successfully');showPage('home');}
+
+function renderServices(cat){
+  const filtered=cat==='all'?SERVICES:SERVICES.filter(s=>s.cat===cat);
+  document.getElementById('services-grid').innerHTML=filtered.map(s=>`
+    <div class="service-card" onclick="openSlotModal(${s.id})">
+      <div class="service-thumb ${s.thumb}"><span>${s.emoji}</span>${s.badge?`<span class="service-badge">${s.badge}</span>`:''}</div>
+      <div class="service-body">
+        <div class="service-name">${s.name}</div>
+        <div class="service-desc">${s.desc}</div>
+        <div class="service-tags">${s.tags.map(t=>`<span class="stag">${t}</span>`).join('')}</div>
+        <div class="service-footer">
+          <div><div class="service-price">₹${s.price.toLocaleString()}</div><div class="service-dur">${s.duration}</div></div>
+          <div style="display:flex;gap:0.5rem">
+            <button class="btn-sm-ghost" onclick="event.stopPropagation();openSlotModal(${s.id})">View Slots</button>
+            <button class="btn-sm" onclick="event.stopPropagation();openSlotModal(${s.id})">Book</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+function filterServices(cat,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderServices(cat);}
+
+function openSlotModal(sid){
+  if(!currentUser){showToast('Please log in to view slots');showLogin('login');return;}
+  selectedService=SERVICES.find(s=>s.id===sid);slotData=generateSlots(sid);
+  selectedDay=0;selectedSlot=null;selectedTherapist=null;
+  document.getElementById('modal-title').textContent=selectedService.name;
+  document.getElementById('modal-meta').textContent=selectedService.duration+' · From ₹'+selectedService.price.toLocaleString();
+  renderDateTabs();renderSlots();updateStepUI(1);
+  document.getElementById('slot-modal').classList.add('open');document.body.style.overflow='hidden';
+}
+function closeSlotModal(){document.getElementById('slot-modal').classList.remove('open');document.body.style.overflow='';}
+function renderDateTabs(){
+  document.getElementById('date-tabs').innerHTML=slotData.map((d,i)=>`
+    <div class="date-tab ${i===selectedDay?'active':''}" onclick="selectDay(${i})">
+      <div class="dt-day">${d.label}</div><div class="dt-num">${d.num}</div><div class="dt-avail">${d.avail} free</div>
+    </div>`).join('');
+}
+function selectDay(i){selectedDay=i;selectedSlot=null;renderDateTabs();renderSlots();setBtn('btn-step2',false);}
+function renderSlots(){
+  document.getElementById('slots-grid').innerHTML=slotData[selectedDay].slots.map((s,i)=>`
+    <div class="slot ${s.booked?'booked':''} ${selectedSlot===i&&!s.booked?'selected':''}" onclick="${s.booked?'':'selectSlot('+i+')'}">
+      <div class="sl-time">${s.time}</div><div class="sl-price">₹${s.price.toLocaleString()}</div>
+      <div class="sl-status">${s.booked?'Booked':s.peak?'Peak ↑':'Available'}</div>
+    </div>`).join('');
+}
+function selectSlot(i){selectedSlot=i;renderSlots();setBtn('btn-step2',true);}
+function renderTherapists(){
+  const rel=THERAPISTS.filter(t=>t.specialties.includes(selectedService.name));
+  const list=rel.length>0?rel:THERAPISTS;
+  document.getElementById('therapist-options').innerHTML=list.map(t=>`
+    <div class="t-option ${selectedTherapist===t.id?'selected':''}" onclick="selectTherapist(${t.id})">
+      <div class="t-avatar ${t.avatar}">${t.emoji}</div>
+      <div class="t-name">${t.name}</div><div class="t-role">${t.role}</div><div class="t-rating">★ ${t.rating}</div>
+    </div>`).join('');
+}
+function selectTherapist(id){selectedTherapist=id;renderTherapists();setBtn('btn-step3',true);}
+function setBtn(id,on){const b=document.getElementById(id);b.disabled=!on;b.style.opacity=on?'1':'0.4';b.style.cursor=on?'pointer':'not-allowed';}
+function goToStep(s){
+  if(s===2)renderTherapists();if(s===3)renderSummary();updateStepUI(s);
+}
+function updateStepUI(s){
+  document.getElementById('step-slot').style.display=s===1?'block':'none';
+  document.getElementById('step-therapist').style.display=s===2?'block':'none';
+  document.getElementById('step-confirm').style.display=s===3?'block':'none';
+  for(let i=1;i<=3;i++){document.getElementById('bstep-'+i).className='step-item'+(i<s?' done':i===s?' current':'');}
+}
+function renderSummary(){
+  const sl=slotData[selectedDay].slots[selectedSlot];
+  const th=THERAPISTS.find(t=>t.id===selectedTherapist);
+  const tax=Math.round(sl.price*0.18);const total=sl.price+tax;
+  document.getElementById('summary-rows').innerHTML=`
+    <div class="summary-row"><span class="sr-label">Treatment</span><span class="sr-value">${selectedService.name}</span></div>
+    <div class="summary-row"><span class="sr-label">Duration</span><span class="sr-value">${selectedService.duration}</span></div>
+    <div class="summary-row"><span class="sr-label">Date</span><span class="sr-value">${slotData[selectedDay].date}</span></div>
+    <div class="summary-row"><span class="sr-label">Time</span><span class="sr-value">${sl.time}</span></div>
+    <div class="summary-row"><span class="sr-label">Therapist</span><span class="sr-value">${th.name}</span></div>
+    <div class="summary-row"><span class="sr-label">Service Price</span><span class="sr-value">₹${sl.price.toLocaleString()}</span></div>
+    <div class="summary-row"><span class="sr-label">GST (18%)</span><span class="sr-value">₹${tax.toLocaleString()}</span></div>
+    <div class="summary-row summary-total"><span class="sr-label">Total Payable</span><span class="sr-value">₹${total.toLocaleString()}</span></div>`;
+}
+function finalConfirm(){
+  const sl=slotData[selectedDay].slots[selectedSlot];
+  const th=THERAPISTS.find(t=>t.id===selectedTherapist);
+  const tax=Math.round(sl.price*0.18);const total=sl.price+tax;
+  const bk={id:'SRN'+Date.now(),service:selectedService.name,emoji:selectedService.emoji,date:slotData[selectedDay].date,time:sl.time,therapist:th.name,duration:selectedService.duration,price:total,status:'upcoming',notes:document.getElementById('special-notes').value};
+  userBookings.unshift(bk);closeSlotModal();
+  document.getElementById('confirm-detail').innerHTML=`
+    <div class="confirm-detail-row"><span class="cd-l">Booking ID</span><span class="cd-v">${bk.id}</span></div>
+    <div class="confirm-detail-row"><span class="cd-l">Treatment</span><span class="cd-v">${bk.service}</span></div>
+    <div class="confirm-detail-row"><span class="cd-l">Date & Time</span><span class="cd-v">${bk.date} · ${bk.time}</span></div>
+    <div class="confirm-detail-row"><span class="cd-l">Therapist</span><span class="cd-v">${bk.therapist}</span></div>
+    <div class="confirm-detail-row"><span class="cd-l">Total Paid</span><span class="cd-v">₹${bk.price.toLocaleString()}</span></div>`;
+  document.getElementById('confirm-modal').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirm-modal').classList.remove('open');}
+function renderBookings(){
+  if(!currentUser){showToast('Please log in to view bookings');showLogin('login');return;}
+  const list=document.getElementById('bookings-list');
+  if(!userBookings.length){list.innerHTML=`<div class="empty-state"><div class="es-icon">🌸</div><p>You have no bookings yet.<br>Explore our treatments and book your first session!</p><button class="btn-primary" onclick="showPage('services')">Browse Services</button></div>`;return;}
+  list.innerHTML=userBookings.map(b=>`
+    <div class="booking-card">
+      <div class="bc-left"><div class="bc-icon">${b.emoji}</div>
+        <div><div class="bc-name">${b.service}</div><div class="bc-meta">${b.date} · ${b.time} · ${b.therapist} · ${b.duration}</div>
+        <div style="margin-top:0.5rem"><span class="bc-status status-${b.status}">${b.status==='upcoming'?'Upcoming':'Completed'}</span></div></div>
+      </div>
+      <div><div class="bc-price">₹${b.price.toLocaleString()}<small>incl. GST</small></div><div style="font-size:0.74rem;color:var(--muted);text-align:right;margin-top:0.3rem">#${b.id}</div></div>
+    </div>`).join('');
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+renderServices('all');
+</script>
+</body>
+</html>
